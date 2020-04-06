@@ -1,1 +1,2 @@
-# Traversy Media Udemy Course - Loan Calculator
+# Traversy Media Udemy Course - Modern Javascript From The Beginning
+## Loan Calculator
