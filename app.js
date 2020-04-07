@@ -1,9 +1,3 @@
-// Hidden Elements
-const loadingGif = document.getElementById('loading');
-const resultsDiv = document.getElementById('results');
-loadingGif.style.display = 'none';
-resultsDiv.style.display = 'none';
-
 // Listen For Submit
 document
   .getElementById('loan-form')
@@ -31,13 +25,14 @@ function calculateResults(e) {
   const monthly = (principal * x * calculatedInterest) / (x - 1);
 
   if (isFinite(monthly)) {
-    loadingGif.style.display = 'block';
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = (monthly * calculatedPayments - principal).toFixed(2);
     setTimeout(() => {
-      loadingGif.style.display = 'none';
-      resultsDiv.style.display = 'block';
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('results').style.display = 'block';
     }, 850);
   } else {
     showError('Please Check Your Input...');
