@@ -1,3 +1,9 @@
+// Hidden Elements
+const loadingGif = document.getElementById('loading');
+const resultsDiv = document.getElementById('results');
+loadingGif.style.display = 'none';
+resultsDiv.style.display = 'none';
+
 // Listen For Submit
 document
   .getElementById('loan-form')
@@ -25,12 +31,43 @@ function calculateResults(e) {
   const monthly = (principal * x * calculatedInterest) / (x - 1);
 
   if (isFinite(monthly)) {
+    loadingGif.style.display = 'block';
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = (monthly * calculatedPayments - principal).toFixed(2);
+    setTimeout(() => {
+      loadingGif.style.display = 'none';
+      resultsDiv.style.display = 'block';
+    }, 850);
   } else {
-    console.log('Please Check Your Input');
+    showError('Please Check Your Input...');
   }
 
   e.preventDefault();
+}
+
+function showError(error) {
+  // Create The Error Message Element From Scratch
+  const errorDiv = document.createElement('div');
+
+  // Get Elements To Be Able To Append
+  const card = document.querySelector('.card');
+  const heading = document.querySelector('.heading');
+
+  // Add Class
+  errorDiv.className = 'alert alert-danger';
+
+  // Create Text Node & Append To Div
+  errorDiv.appendChild(document.createTextNode(error));
+
+  // Insert Error Above Heading
+  card.insertBefore(errorDiv, heading);
+
+  // Clear Error After 3 Seconds
+  setTimeout(clearError, 3000);
+}
+
+// Clear Error
+function clearError() {
+  document.querySelector('.alert').remove();
 }
